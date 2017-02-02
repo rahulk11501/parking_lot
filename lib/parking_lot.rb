@@ -48,19 +48,51 @@ class ParkingLot
 end
 
 loop do
-  input = STDIN.gets.strip
-  command, *params = input.split /\s/
+  mode_type = ARGV
+  if !mode_type.nil?
+  # Code for File mode type
+    if mode_type[0] == "file_inputs.txt > output.txt".strip
+      input_file = mode_type[0].split(">")[0].strip
+      output_file = mode_type[0].split(">")[1].strip
 
-  case command
-    when 'create_parking_lot'
-      $parking_lot = ParkingLot.new params[0].to_i
-      puts $parking_lot.count
-      # puts p.parking_spaces[slotno]
-    when 'park'
-      $parking_lot.park params[0], params[1]
-    when 'leave'
-      $parking_lot.leave params[0].to_i
+      @input_file_path = "#{Dir.pwd}/data/#{input_file}"
+      @output_file_path = "#{Dir.pwd}/data/#{output_file}"
+      if File.file?(@input_file_path) && File.file?(@output_file_path)
+        #Clear Output File
+        open_output_file = File.open(@output_file_path, "a+")
+        open_output_file.truncate(0)
+        #Parse Input File
+        File.open(@input_file_path, "r") do |file|
+          while input_command = file.gets
+            unless input_command.empty?
+              @input_command = input_command
+              
+            end
+          end
+        end
+      else
+
+      end
     else
-      puts 'Invalid command'
+      puts 'Wrong Input file or Output file provided'
+    end
+    break
+  else
+    #Code for Interactive Shell
+    input = STDIN.gets.strip
+    command, *params = input.split /\s/
+
+    case command
+      when 'create_parking_lot'
+        $parking_lot = ParkingLot.new params[0].to_i
+        puts $parking_lot.count
+        # puts p.parking_spaces[slotno]
+      when 'park'
+        $parking_lot.park params[0], params[1]
+      when 'leave'
+        $parking_lot.leave params[0].to_i
+      else
+        puts 'Invalid command'
+    end
   end
 end
