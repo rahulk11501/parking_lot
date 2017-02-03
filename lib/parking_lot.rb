@@ -1,20 +1,14 @@
 class ParkingLot
 
-  # class << self
    require_relative "slot"
    attr_accessor :count, :parking_spaces
    def initialize(count)
-
       @count = 0
       @parking_spaces = []
-
       count.times do |n|
         @parking_spaces << Slot.new(n)
       end
-
       @count = @parking_spaces.count
-      # puts "Created a parking garage with #{@count} slots"
-
    end
 
    def park(regno, color)
@@ -26,27 +20,22 @@ class ParkingLot
          space.parked_car_color = color
          #comeout of the loop if parked
          @slot_no = (index+1).to_s
-        #  puts "Car parked at slot: #{@slot_no}"
          return index+1
          break
        end
      end
      #if no slot available
      if @slot_no.empty?
-      #  puts 'No parking space available'
        return nil
      end
-
     end
 
     def leave(slot_no)
       free_slot = @parking_spaces[slot_no-1]
       free_slot.parked_car_regno=""
       free_slot.parked_car_color=""
-      # puts "Slot number #{slot_no} is free"
       return slot_no
     end
-  # end
 
     def status
       table = "Slot No  Registration No  Colour"
@@ -61,7 +50,6 @@ class ParkingLot
 
     def registration_numbers_of_cars_with_colour(color)
       cars=""
-      # puts 'zzzzzzzzz', color
       @parking_spaces.each_with_index do |space,index|
         if space.parked_car_color == color
           cars = cars+space.parked_car_regno+', '
@@ -72,7 +60,6 @@ class ParkingLot
 
     def slots_for_cars_with_colour(color)
       slots=""
-      # puts 'zzzzzzzzz', color
       @parking_spaces.each_with_index do |space,index|
         if space.parked_car_color == color
           slots = slots+(index+1).to_s+', '
@@ -90,7 +77,6 @@ class ParkingLot
       end
       return !slot.empty? ? slot : 'Not Found'
     end
-
 end
 
 loop do
@@ -98,10 +84,8 @@ loop do
   if mode_type
   # ------------------------------Code for File mode type---------------------------
     if mode_type == "file_inputs.txt > output.txt"
-
       input_file = mode_type.split(">")[0].strip
       output_file = mode_type.split(">")[1].strip
-
       @input_file_path = "#{Dir.pwd}/data/#{input_file}"
       @output_file_path = "#{Dir.pwd}/data/#{output_file}"
 
@@ -143,9 +127,6 @@ loop do
               end
               open_output_file.write output
               open_output_file.write "\n"
-                # file.puts "\n"
-
-              # end
             end
           end
         end
@@ -164,7 +145,6 @@ loop do
 
     input = STDIN.gets.strip
     command, *params = input.split /\s/
-    # puts params
     case command
       when 'create_parking_garage'
         $parking_lot = ParkingLot.new params[0].to_i
