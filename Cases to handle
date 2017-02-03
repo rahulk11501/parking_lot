@@ -1,7 +1,0 @@
-1. leave a slot which is already empty
-2. create parking lot when a parking lot is already there
-3. Error handling for irb
-4. Make irb more descriptive
-5. park and leave only when parking lot is created
-6. make error messages and other messages in other file
-7. Use helper files
